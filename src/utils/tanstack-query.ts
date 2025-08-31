@@ -1,9 +1,9 @@
 import { fetcher } from './fetcher';
 
-export function queryFunction<TResponse, TParams>(endpoint: string, params?: TParams) {
-  return () => fetcher<TResponse>('get', endpoint, undefined, params);
+export async function queryFunction<TParams, TResponse>(endpoint: string, params: TParams) {
+  return await fetcher<TResponse>('get', endpoint, undefined, params);
 }
 
-export function mutationFunction<TResponse, TRequest>(endpoint: string, method: 'post' | 'patch', data?: TRequest) {
-  return () => fetcher<TResponse>(method, endpoint, data);
+export async function mutationFunction<TRequest, TResponse>(endpoint: string, method: 'patch', data: TRequest) {
+  return await fetcher<TResponse>(method, endpoint, data);
 }
