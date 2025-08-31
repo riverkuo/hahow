@@ -1,0 +1,6 @@
+export enum HeroKeys {
+  LIST = 'LIST',
+  DETAIL = 'DETAIL',
+  PROFILE = 'PROFILE',
+  UPDATE_PROFILE = 'UPDATE_PROFILE',
+}

@@ -1,8 +1,4 @@
-import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
-
-interface ApiResponse<T = any> {
-  data: T;
-}
+import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios';
 
 const api: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -29,21 +25,18 @@ api.interceptors.response.use(
   }
 );
 
-export async function fetcher<T = any>(
-  method: 'get' | 'post' | 'patch',
+export async function fetcher<T = unknown>(
+  method: 'get' | 'patch',
   endpoint: string,
-  data?: any,
-  params?: any
-): Promise<{ data: T }> {
+  data?: unknown,
+  params?: unknown
+): Promise<T> {
   try {
-    let response: AxiosResponse<ApiResponse>;
+    let response: T;
 
     switch (method) {
       case 'get':
         response = await api.get(endpoint, { params });
-        break;
-      case 'post':
-        response = await api.post(endpoint, data);
         break;
       case 'patch':
         response = await api.patch(endpoint, data);
@@ -52,13 +45,12 @@ export async function fetcher<T = any>(
         throw new Error(`Unsupported HTTP method: ${method}`);
     }
 
-    const { data: responseData } = response.data;
-
-    return {
-      data: responseData,
-    };
-  } catch (error: any) {
-    const errorMessage = error.message || 'Unknown error';
-    throw new Error(errorMessage);
+    return response;
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      const errorMessage = error.status?.toString() || 'Unknown error';
+      throw new Error(errorMessage);
+    }
+    throw new Error('Unknown error');
   }
 }
