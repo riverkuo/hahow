@@ -1,8 +1,9 @@
-import { mutationFunction, queryFunction, useHandleError } from '@/utils/tanstack-query';
+import { mutationFunction, queryFunction } from '@/utils/tanstack-query';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { enqueueSnackbar } from 'notistack';
 import type { HeroItem, HeroList, HeroProfile } from '../types/hero';
 import { HeroKeys } from './keys';
+import { useHandleError } from '@/utils/fetcher';
 
 export function useHeroList() {
   const { handleError } = useHandleError();

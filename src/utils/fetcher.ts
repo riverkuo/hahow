@@ -1,4 +1,8 @@
 import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios';
+import { useDialog } from '@/stores/dialog';
+import { enqueueSnackbar } from 'notistack';
+import { useNavigate } from 'react-router-dom';
+import { RoutePaths } from '@/constants/routes';
 
 const api: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -53,4 +57,33 @@ export async function fetcher<T = unknown>(
     }
     throw new Error('Unknown error');
   }
+}
+
+export function useHandleError() {
+  const { onOpenDialog } = useDialog();
+  const navigate = useNavigate();
+
+  function handleError(error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    switch (errorMessage) {
+      case '404':
+        onOpenDialog({
+          type: 'error',
+          content: '找不到資料',
+          title: errorMessage,
+          cancel: {
+            text: '回首頁',
+            onClick: () => {
+              navigate(RoutePaths.Home);
+            },
+          },
+        });
+        break;
+      default:
+        enqueueSnackbar('Unknown error', { variant: 'error' });
+        break;
+    }
+  }
+
+  return { handleError };
 }

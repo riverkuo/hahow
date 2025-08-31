@@ -67,48 +67,46 @@ export function HeroProfile() {
   }, [powerData]);
 
   return (
-    <>
-      <Divider />
-      <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Box
-            borderRadius={1}
-            p={2}
-            sx={(theme) => ({
-              backgroundColor: theme.palette.action.selected,
-              p: 2,
-              borderRadius: 1,
-            })}
-            display="flex"
-            justifyContent="space-between"
-          >
-            <Box display="flex" flexDirection="column" gap={2}>
-              {Object.keys(defaultValues).map((key, index) => (
-                <Box key={index} display="flex" alignItems="center" minWidth={200} justifyContent="space-between">
-                  <Typography variant="h6">{key.toUpperCase()}</Typography>
-                  <PowerInput formKey={key as keyof HeroProfile} pointDiff={pointsDiff} />
-                </Box>
-              ))}
-            </Box>
-            <Box alignSelf="flex-end" display="flex" flexDirection="column" gap={2} alignItems="flex-end">
-              <Typography variant="h6">剩餘點數：{isFetching ? 0 : pointsDiff}</Typography>
-              {/* 剩餘點數為 0 、與原先資料不同時，才可以儲存 */}
-              <Button
-                type="submit"
-                variant="outlined"
-                color="secondary"
-                disabled={isSaveButtonDisabled}
-                loading={isMutating}
-                loadingPosition="end"
-                isDirty={isDirty}
-              >
-                儲存
-              </Button>
-            </Box>
+    <FormProvider {...methods}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Box
+          borderRadius={1}
+          p={2}
+          sx={(theme) => ({
+            backgroundColor: theme.palette.action.selected,
+            borderRadius: 1,
+          })}
+          display="flex"
+          justifyContent="space-between"
+          flexDirection={{ xs: 'column', sm: 'row' }}
+          gap={8}
+        >
+          <Box display="flex" flexDirection="column" gap={2}>
+            {Object.keys(defaultValues).map((key, index) => (
+              <Box key={index} display="flex" alignItems="center" minWidth={200} justifyContent="space-between">
+                <Typography variant="h6">{key.toUpperCase()}</Typography>
+                <PowerInput formKey={key as keyof HeroProfile} pointDiff={pointsDiff} />
+              </Box>
+            ))}
           </Box>
-        </form>
-      </FormProvider>
-    </>
+          <Box alignSelf="flex-end" display="flex" flexDirection="column" gap={2} alignItems="flex-end">
+            <Typography variant="h6">剩餘點數：{isFetching ? 0 : pointsDiff}</Typography>
+            {/* 剩餘點數為 0 、與原先資料不同時，才可以儲存 */}
+            <Button
+              type="submit"
+              variant="outlined"
+              color="secondary"
+              disabled={isSaveButtonDisabled}
+              loading={isMutating}
+              loadingPosition="end"
+              isDirty={isDirty}
+            >
+              儲存
+            </Button>
+          </Box>
+        </Box>
+      </form>
+    </FormProvider>
   );
 }
 
