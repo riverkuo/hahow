@@ -36,8 +36,6 @@ pnpm dev
 
 3. **實作**
 
-4. 開啟瀏覽器訪問 `http://localhost:5173`
-
 ## 專案的資料夾架構、Application 的邏輯架構，說明你的設計理念
 
 ### 檔案架構圖
@@ -81,7 +79,7 @@ hahow/
 
 ### 設計理念
 
-採用 **Feature-based Architecture** 和 **Bulletproof React** 的設計方式：
+採用 **Feature-based Architecture** 的設計方式：
 
 1. **Feature-based Architecture**: 以功能為單位組織程式碼，每個功能模組包含自己的 API、組件、類型定義等，提高程式碼的可維護性和可擴展性。
 
@@ -150,9 +148,10 @@ hahow/
 ### 1. MUI Theme 配置困難
 
 **問題**: 需要自定義 MUI 主題以符合設計需求
+
 **解決**: 使用官方免費的顏色系統和陰影效果
 
-## 補充優化
+## 其他優化
 
 ### 1. 使用 TanStack Query 對 API 做 stale
 
@@ -164,7 +163,6 @@ hahow/
 
 - 統一的 HTTP 請求處理
 - 請求攔截器和響應處理
-- 錯誤處理和狀態碼管理
 
 ### 3. Button 有 form dirty 狀態
 
@@ -189,9 +187,3 @@ hahow/
 ### 7. Skeleton 優化 loading state
 
 - 使用 MUI Skeleton 組件顯示載入狀態
-
-### 功能特色
-
-- 響應式設計，支援各種螢幕尺寸
-- 即時表單驗證和狀態管理
-- 載入狀態和錯誤處理
