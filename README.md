@@ -85,6 +85,74 @@ hahow/
 
 2. **關注點分離**: API 層、業務邏輯層、UI 層明確分離，便於測試和維護。
 
+### Application 邏輯架構
+
+#### 1. 應用程式入口層 (Entry Layer)
+
+```
+main.tsx → App.tsx → AppRoutes
+```
+
+- **main.tsx**: 應用程式啟動點，配置所有 Provider
+- **App.tsx**: 根組件，負責渲染路由
+- **AppRoutes**: 路由配置，使用 React Router 管理頁面導航
+
+#### 2. 狀態管理層 (State Management Layer)
+
+- **QueryProvider**: 管理 React Query 客戶端，處理伺服器狀態
+- **DialogProvider**: 管理全域對話框狀態
+- **ThemeProvider**: 提供 MUI 主題配置
+- **SnackBarProvider**: 管理通知系統狀態
+
+#### 3. 路由架構 (Routing Architecture)
+
+```
+/ (首頁)
+└── /heroes (英雄頁面)
+    ├── / (英雄列表)
+    └── /:heroId (英雄資料編輯)
+```
+
+- 使用巢狀路由結構
+- 支援動態路由參數 (`:heroId`)
+- 實作 Code Splitting (lazy loading)
+- HeroList 使用 layout 的方式讓切頁時不會重先渲染
+
+#### 4. 資料流架構 (Data Flow Architecture)
+
+```
+UI 組件 → Custom Hooks → API Service → HTTP Client → Backend
+```
+
+- **UI 組件**: 負責渲染和使用者互動
+- **Custom Hooks**: 封裝業務邏輯和狀態管理
+- **API Service**: 定義 API 端點和資料處理邏輯
+- **HTTP Client**: 統一的 HTTP 請求處理
+
+#### 5. 錯誤處理架構 (Error Handling Architecture)
+
+```
+API Error → useHandleError → Dialog/Toast → User
+```
+
+- 統一的錯誤處理機制
+- 根據錯誤類型顯示不同的 UI
+
+#### 6. 快取策略 (Caching Strategy)
+
+```
+`/heroes`: staleTime: 10min, cacheTime: 20min（沒有變動，因此設定的時間長）
+`/heroes/:id/profile`: staleTime: 0, cacheTime: 0 (即時更新)
+```
+
+- 針對不同資料類型設定不同的快取策略
+
+#### 7. HeroProfile 編輯原理
+
+1. power points 加起來要到相同的總數、跟 api 回傳的不一樣時，才可以送出
+2. 若 power points 已經達到總數，則無法增加
+3. 若單一個 power points 為 0，則無法減
+
 ## 對於所有使用到的第三方 library 的理解，以及為何想在這個專案中使用它
 
 ### 核心框架
