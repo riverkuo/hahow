@@ -6,6 +6,7 @@ const LazyHeroList = lazy(() => import('../pages/hero-list'));
 const LazyHeroProfile = lazy(() => import('../pages/hero-profile'));
 const LazyHeroLayout = lazy(() => import('../layouts/hero'));
 const LazyHome = lazy(() => import('../pages/home'));
+const NotFound = lazy(() => import('../pages/not-found'));
 
 export function AppRoutes() {
   return (
@@ -16,6 +17,7 @@ export function AppRoutes() {
           <Route index element={<LazyHeroList />} />
           <Route path={RoutePaths.HeroId} element={<LazyHeroProfile />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
