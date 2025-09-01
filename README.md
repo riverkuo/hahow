@@ -255,3 +255,7 @@ API Error → useHandleError → Dialog/Toast → User
 ### 7. Skeleton 優化 loading state
 
 - 使用 MUI Skeleton 組件顯示載入狀態
+
+### 8. 輸入無效的頁面網址，會導向自定義的頁面
+
+- ex:`http://localhost:5173/test12345`
