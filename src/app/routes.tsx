@@ -9,7 +9,7 @@ const LazyHome = lazy(() => import('../pages/home'));
 
 export function AppRoutes() {
   return (
-    <BrowserRouter basename="/hahow">
+    <BrowserRouter>
       <Routes>
         <Route index element={<LazyHome />} />
         <Route path={RoutePaths.Heroes} element={<LazyHeroLayout />}>
