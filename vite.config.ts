@@ -4,7 +4,7 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  base: process.env.NODE_ENV !== 'development' ? '/hahow/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/hahow/' : '/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'), // 手動映射
